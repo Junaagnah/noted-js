@@ -1,0 +1,24 @@
+{
+  "name": "noted-js",
+  "version": "0.0.1",
+  "description": "A simple notes taking cli application.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Junaagnah/noted-js.git"
+  },
+  "keywords": [
+    "notes",
+    "taking",
+    "app"
+  ],
+  "author": "Junaagnah",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Junaagnah/noted-js/issues"
+  },
+  "homepage": "https://github.com/Junaagnah/noted-js#readme"
+}
