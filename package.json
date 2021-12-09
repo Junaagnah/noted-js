@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "A simple notes taking cli application.",
   "main": "index.js",
+  "bin": {
+    "noted": "./index.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -20,5 +23,12 @@
   "bugs": {
     "url": "https://github.com/Junaagnah/noted-js/issues"
   },
-  "homepage": "https://github.com/Junaagnah/noted-js#readme"
+  "type": "module",
+  "homepage": "https://github.com/Junaagnah/noted-js#readme",
+  "dependencies": {
+    "chalk": "^5.0.0",
+    "fileger": "^1.1.0",
+    "lowdb": "^3.0.0",
+    "yargs": "^17.3.0"
+  }
 }
