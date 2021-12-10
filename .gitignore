@@ -132,6 +132,9 @@ dist
 # SvelteKit build / generate output
 .svelte-kit
 
+# package-lock
+package-lock.json
+
 # Generated database
 db.json
 db.json.enc
