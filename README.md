@@ -1,4 +1,4 @@
 # NOTED-JS
-## A simple notes taking application.
+## A simple CLI notes taking application.
 
 ### This is a WIP.

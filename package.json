@@ -27,7 +27,6 @@
   "homepage": "https://github.com/Junaagnah/noted-js#readme",
   "dependencies": {
     "chalk": "^5.0.0",
-    "fileger": "^1.1.0",
     "lowdb": "^3.0.0",
     "yargs": "^17.3.0"
   }
