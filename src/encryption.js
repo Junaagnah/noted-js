@@ -1,5 +1,7 @@
 import fs from 'fs';
 import crypto from 'crypto';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
 
 const algorithm = 'aes-256-ctr';
 
@@ -11,11 +13,16 @@ class Encryption {
      * @param {String} password 
      */
     static async encrypt(password) {
+        // Getting dirs
+        const __dirname = dirname(fileURLToPath(import.meta.url).replace('src/', ''));
+        const encryptedFilePath = join(__dirname, 'db.json.enc');
+        const unencryptedFilePath = join(__dirname, 'db.json');
+
         // We check if the database file is decrypted
-        if (!fs.existsSync('db.json.enc')) {
-            if (fs.existsSync('db.json')) {
+        if (!fs.existsSync(encryptedFilePath)) {
+            if (fs.existsSync(unencryptedFilePath)) {
                 // Encrypting the file
-                const fileContent = fs.readFileSync('db.json');
+                const fileContent = fs.readFileSync(unencryptedFilePath);
                 const buffer = Buffer.from(fileContent);
 
                 const key = crypto.createHash('sha256').update(String(password)).digest('base64').substring(0, 32);
@@ -25,10 +32,10 @@ class Encryption {
                 const result = Buffer.concat([iv, cipher.update(buffer), cipher.final()]);
 
                 // Write encrypted content to file
-                fs.writeFileSync('db.json', result);
+                fs.writeFileSync(unencryptedFilePath, result);
 
                 // Renaming the file
-                fs.renameSync('db.json', 'db.json.enc');
+                fs.renameSync(unencryptedFilePath, encryptedFilePath);
             } else {
                 throw new Error('Database not found !');
             }
@@ -43,12 +50,17 @@ class Encryption {
      * @param {String} password 
      */
     static async decrypt(password) {
+        // Getting dirs
+        const __dirname = dirname(fileURLToPath(import.meta.url).replace('src/', ''));
+        const encryptedFilePath = join(__dirname, 'db.json.enc');
+        const unencryptedFilePath = join(__dirname, 'db.json');
+
         // We check if the database file is not encrypted
-        if (!fs.existsSync('db.json')) {
-            if (fs.existsSync('db.json.enc')) {
+        if (!fs.existsSync(unencryptedFilePath)) {
+            if (fs.existsSync(encryptedFilePath)) {
                 try {
                     // Decrypting the file
-                    let encrypted = fs.readFileSync('db.json.enc');
+                    let encrypted = fs.readFileSync(encryptedFilePath);
 
                     const key = crypto.createHash('sha256').update(String(password)).digest('base64').substring(0, 32);
                     const iv = encrypted.slice(0, 16);
@@ -66,8 +78,8 @@ class Encryption {
                     }
 
                     // Write decrypted content to file and rename it
-                    fs.writeFileSync('db.json.enc', result);
-                    fs.renameSync('db.json.enc', 'db.json');
+                    fs.writeFileSync(encryptedFilePath, result);
+                    fs.renameSync(encryptedFilePath, unencryptedFilePath);
                 } catch (error) {
                     throw error;
                 }
